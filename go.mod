@@ -1,4 +1,4 @@
-module paplibs
+module github.com/lhxlnsy/paplibs
 
 go 1.16
 
