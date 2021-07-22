@@ -54,12 +54,12 @@ func InitConfig(p string) {
 	if p != "" {
 		configPath = p
 	}
-	_Logger.Print().Infow(fmt.Sprintf("Configuration File Path: %v", configPath))
+	Logger.Print().Infow(fmt.Sprintf("Configuration File Path: %v", configPath))
 	if err := configor.Load(&Config, configPath); err != nil {
-		_Logger.Print().Error(fmt.Sprintf("Config Path:%s, Error:%s", configPath, err.Error()))
+		Logger.Print().Error(fmt.Sprintf("Config Path:%s, Error:%s", configPath, err.Error()))
 		return
 	}
 	if Config.Debug {
-		_Logger.Print().Infow(fmt.Sprintf("配置项: %v", Config))
+		Logger.Print().Infow(fmt.Sprintf("配置项: %v", Config))
 	}
 }
