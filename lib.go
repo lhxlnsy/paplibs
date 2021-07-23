@@ -1,10 +1,10 @@
 package libs
 
 import (
+	"encoding/binary"
 	"os"
 	"path/filepath"
 	"time"
-	"unsafe"
 )
 
 const (
@@ -43,13 +43,9 @@ func BytesToBits(data []byte) []int {
 }
 
 func IntToByteArray(num int64) []byte {
-	size := int(unsafe.Sizeof(num))
-	arr := make([]byte, size)
-	for i := 0; i < size; i++ {
-		byt := *(*uint8)(unsafe.Pointer(uintptr(unsafe.Pointer(&num)) + uintptr(i)))
-		arr[i] = byt
-	}
-	return arr
+	var buf = make([]byte, 8)
+	binary.LittleEndian.PutUint64(buf, uint64(num))
+	return buf
 }
 
 func IntToBits(num int64) []int {
