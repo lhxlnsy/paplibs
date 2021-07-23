@@ -31,10 +31,15 @@ func StrToTime(timestr string) time.Time {
 	return timestamp
 }
 
+func Int64ToBytes(num int64) []byte {
+	var buf = make([]byte, 8)
+	binary.LittleEndian.PutUint64(buf, uint64(num))
+	return buf
+}
 func BytesToBits(data []byte) []int {
 	dst := make([]int, 0)
 	for _, v := range data {
-		for i := 0; i < 8; i++ {
+		for i := 7; i > 0; i-- {
 			move := uint(7 - i)
 			dst = append(dst, int((v>>move)&1))
 		}
@@ -42,12 +47,6 @@ func BytesToBits(data []byte) []int {
 	return dst
 }
 
-func IntToByteArray(num int64) []byte {
-	var buf = make([]byte, 8)
-	binary.LittleEndian.PutUint64(buf, uint64(num))
-	return buf
-}
-
 func IntToBits(num int64) []int {
-	return BytesToBits(IntToByteArray(num))
+	return BytesToBits(Int64ToBytes(num))
 }
